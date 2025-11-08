@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="es">
+<head>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Lista de Navidad 2025-2026</title>
+<style>
+
+:root {
+  --accent:#991b1b;
+  --gold:#facc15;
+}
+
+body {
+  margin:0;
+  font-family: 'Nunito', sans-serif;
+  background-image: url("https://i.pinimg.com/originals/c2/e7/f8/c2e7f882c7cc04661083217d8c23364c.gif");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color:#111827;
+  overflow-x:hidden;
+}
+
+/* Cabecera */
+header {
+  text-align:center;
+  padding:2rem 1rem;
+  color:#fffbe6;
+  text-shadow:0 3px 10px rgba(0,0,0,0.4);
+}
+header h1 {
+  font-family:'Mountains of Christmas', cursive;
+  margin:0;
+  font-size:2.4rem;
+}
+
+/* Secciones */
+.section { padding: 2rem 0; text-align:center; position:relative; }
+.section-title {
+  display:inline-block;
+  padding:1rem 2rem;
+  border-radius:14px;
+  font-size:2rem;
+  font-family:'Mountains of Christmas', cursive;
+  cursor:pointer;
+  transition:all .25s ease;
+  color: #fffbe6;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #ff0,
+    0 0 20px #ff0,
+    0 0 40px #ffa500,
+    0 0 80px #ffa500;
+  animation: neonBlink 3s infinite ease-in-out;
+}
+
+@keyframes neonBlink {
+  0%, 100% {
+    text-shadow:
+      0 0 5px #fff,
+      0 0 10px #ff0,
+      0 0 20px #ff0,
+      0 0 40px #ffa500,
+      0 0 80px #ffa500;
+    opacity: 1;
+  }
+  50% {
+    text-shadow:
+      0 0 2px #fff,
+      0 0 5px #ff0,
+      0 0 10px #ff0,
+      0 0 20px #ffa500,
+      0 0 40px #ffa500;
+    opacity: 0.8;
+  }
+}
+
+.section-title:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 25px rgba(255, 255, 150, 0.6);
+}
+
+
+.section-divider {
+  width:72px;height:4px;background:var(--gold);
+  border-radius:4px;margin:1rem auto;
+}
+
+/* Galería */
+.gift-grid {
+  display:none;
+  max-width:1200px;
+  margin:0 auto;
+  padding:1rem;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap:1.5rem;
+}
+
+/* Tarjeta */
+.gift {
+  background:linear-gradient(180deg,#fffdf8 0%, #fff7ea 100%);
+  border-radius:14px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.12);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  min-height:300px;
+}
+.gift img {
+  width:100%; height:360px; object-fit:cover;
+  border-bottom:4px solid var(--gold);
+}
+.gift-body {
+  padding:12px; display:flex; flex-direction:column;
+  gap:8px; flex:1;
+}
+.gift-title { font-weight:700; color:var(--accent); font-size:1rem; }
+.gift-comment { font-size:0.85rem; color:#374151; flex:1; }
+.gift-actions { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:0.6rem; }
+.buy-link {
+  text-decoration:none;
+  padding:6px 10px;
+  border-radius:8px;
+  background:var(--gold);
+  color:#111;
+  font-weight:700;
+  font-size:0.85rem;
+}
+.buy-link:hover {
+  background:#ffe168;
+}
+.check {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:0.9rem;
+  color:#065f46;
+  margin-top:auto;
+}
+
+footer {
+  text-align:center;
+  color:#fff6d6;
+  padding:2rem 1rem;
+  font-size:0.95rem;
+}
+
+/* --- Versión móvil mejorada --- */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.8rem;
+  }
+  .section-title {
+    font-size: 1.4rem;
+    padding: 0.8rem 1.4rem;
+  }
+  .gift-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    padding: 0.5rem;
+    gap: 1rem;
+  }
+  .gift img {
+    height: 220px;
+  }
+  .gift-title {
+    font-size: 0.95rem;
+  }
+  .gift-comment {
+    font-size: 0.8rem;
+  }
+  footer {
+    font-size: 0.8rem;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🎄 Mis Regalos 🎁</h1>
+  <p>Haz clic en cada categoría para ver todas las opciones ↓</p>
+</header>
+
+<main id="giftContainer"></main>
+<footer>¡Feliz Navidad! 🎅✨</footer>
+
+<script>
+const giftsByCategory = {
+  "Muñecas Monster High": [
+    { name:"Draculaura<br>ghouls spirit </br>", img:"https://i.pinimg.com/1200x/11/f5/cd/11f5cd602a3e898716b5944cdd8d6327.jpg",links:[
+      { text:"Amazon", url:"https://www.amazon.es/draculaura" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+    },
+
+    { name:"Clawdeen Wolf <br>School out</br>", img:"https://egolonsville.weebly.com/uploads/5/6/5/5/5655847/2471968_orig.jpg", links:[
+      { text:"Vinted", url:"https://www.vinted.es/items/4640447015-monster-high-clawdeen-wolf" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ], comment:"De estilo salvaje." },
+    
+    { name:"Frankie <br>Classroom</br>", img:"https://2.bp.blogspot.com/-KuCcgQbf08E/VuqMqWmu4LI/AAAAAAAAh60/zJR2VKqxyzEz8bbwKoBsA9mPW7YU6irRg/s800/Frankie-Classroom-Rerelease-1.jpg", links:[
+      { text:"Amazon", url:"https://www.amazon.es/draculaura" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ], comment:"Look eléctrico." },
+    
+    {
+    name:"Abbey <br>Ghlous Rule</br>", img:"https://i5.walmartimages.com/seo/Monster-High-Ghouls-Rule-Abbey-Bominable_c7bd0350-4beb-47f0-80a2-87dd7f5daec9.55d4b12e25b4b6ccb610aee1ef072823.jpeg",links:[
+      { text:"Vinted 1", url:"" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+    },
+    { name:"Frankie <br>Ghouls rule</br>", img:"https://i.ebayimg.com/images/g/7OEAAOxylh1SInqY/s-l640.jpg", link:"#", comment:"Look eléctrico." },
+    
+    { name:"ghoulia <br>dawn of the dance</br>", img:"https://egolonsville.weebly.com/uploads/5/6/5/5/5655847/4918893_orig.jpg",links:[
+      { text:"Amazon", url:"https://www.amazon.es/draculaura" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+    },
+    { name:"Frankie <br>Cuento de miedo</br>", img:"https://m.media-amazon.com/images/I/71UPfC3PH8L.jpg", links:[
+      { text:"Vinted 1", url:"https://www.vinted.es/items/7481155803-monster-high-frankie-stein-scary-tale?referrer=catalog" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ], comment:"Look eléctrico." },
+    
+    { name:"Lagoona Blue <br>School out</br>", img:"https://preview.redd.it/iso-schools-out-lagoona-v0-v8gnwkt6u37a1.jpg?width=640&crop=smart&auto=webp&s=8f8fb03b29a3c8912ce07ebbbfeccc93d3c8f03d",links:[
+      { text:"Amazon", url:"https://www.amazon.es/draculaura" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+    },
+      { name:"Lagoona Blue <br>Españita</br>", img:"https://http2.mlstatic.com/D_766465-MLM31943779847_082019-C.jpg",links:[
+      { text:"Amazon", url:"https://www.amazon.es/draculaura" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+  },
+  { name:"Honey Swamp <br></br>", img:"https://i5.walmartimages.com/seo/Monster-High-Frights-Camera-Action-Honey-Swamp-Doll_8f1d3c8e-af70-40c3-b92b-638d052d971a.11b9ba1a4b7075191e07bdee002ebe31.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",links:[
+      { text:"Amazon", url:"https://www.amazon.es/draculaura" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+  name:"River Styx", img:"https://media.juguetesland.com/product/monster-hight-river-styxx-800x800.jpg?width=1200",links:[
+      { text:"Vinted", url:"https://www.vinted.es/items/7208899035-monster-high-river-styxx?referrer=catalog" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+  name:"Twyla <br>Basica</br>", img:"https://www.juguetes.es/comprar/imagenes/m/74220.jpg",links:[
+      { text:"Amazon", url:"https://www.amazon.es/draculaura" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+  name:"Twyka <br>Freak du chic</br>", img:"https://i.ebayimg.com/images/g/TUwAAOSwvxBeTpLD/s-l640.jpg",links:[
+      { text:"Amazon", url:"https://www.amazon.es/draculaura" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+  name:"Toralei <br>Freak du chic</br>", img:"https://m.media-amazon.com/images/I/81wlmZFp1uL.jpg",links:[
+      { text:"Amazon", url:"https://www.amazon.es/draculaura" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+  name:"Clawdeen <br>Freak du chic</br>", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoY3HXVnw2GFA-NOEuD6k5lvbfK1PQUXkNXQ&s",links:[
+      { text:"Amazon", url:"https://www.amazon.es/draculaura" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+  name:"Rochelle <br>Freak du chic</br>", img:"https://preview.redd.it/rochelle-freak-du-chic-v0-hegnake3cshe1.jpeg?auto=webp&s=957b16722ab352a7a90e14df8a2726deb14ece1e",links:[
+      { text:"Vinted", url:"https://www.vinted.es/items/7382251309-rochelle-freak-du-chic-con-playset-circo-monster-high" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+name:"Operetta <br>dot dead gorgeruous</br>", img:"https://i.ebayimg.com/images/g/6akAAOSwBFlmh6SZ/s-l1200.jpg",links:[
+      { text:"Vinted 1", url:"https://www.vinted.es/items/7480402226-poupee-monster-high-operetta?referrer=catalog" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+name:"Lagoona <br>dot dead gorgeruous</br>", img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvsCyEmpsKFqCq-68IW-_qvMKCvOqE_XLYAg&s",links:[
+      { text:"Vinted 1", url:"" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+name:"Spectra <br>dot dead gorgeruous</br>", img:"https://m.media-amazon.com/images/I/71ZVnZ3VQfL.jpg",links:[
+      { text:"Vinted 1", url:"https://es.wallapop.com/item/muneca-monster-high-1194038210" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+name:"Abbey <br>dot dead gorgeruous</br>", img:"https://i0.wp.com/dollect.net/wp-content/uploads/2023/07/Dot-Dead-Gorgeous-3-pack-1-Abbey.jpg?resize=800%2C800&ssl=1",links:[
+      { text:"Vinted 1", url:"" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+
+{
+name:"Spectra <br>ghouls night out</br>", img:"https://kukolky.com.ua/image/cache/data/Monster_High/Monster%20High%20Ghouls%20Night%20Out%20Spectra%20Vondergeist%201-700x600_0.jpg",links:[
+      { text:"Vinted 1", url:"" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+name:"Rochelle <br>ghouls night out</br>", img:"https://4.bp.blogspot.com/-zIS5DBXvoZU/VuxL6yvVZYI/AAAAAAAAiPw/JHsRHVsPWl01sN462oJ7MWqsqu1Bs-y2Q/s800/Ghouls-Night-Out-4-pack-1-Rochelle.jpg",links:[
+      { text:"Vinted 1", url:"" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+name:"Rochelle <br>Zombie</br>", img:"https://i.pinimg.com/736x/dd/63/c4/dd63c413e72c3319ee6838ecb8a3dc60.jpg",links:[
+      { text:"Vinted 1", url:"" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+name:"Venus <br>Zombie</br>", img:"https://i.pinimg.com/736x/90/a2/5f/90a25fe85988b6732b5b1adde96ff4ba.jpg",links:[
+      { text:"Vinted 1", url:"" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+
+{
+name:"Abbey <br>music festival </br>", img:"https://m.media-amazon.com/images/I/71JWxLelDWL._AC_UF894,1000_QL80_.jpg",links:[
+      { text:"Vinted 1", url:"" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+name:"Clawdeen <br>music festival </br>", img:"https://m.media-amazon.com/images/I/71tCJaruuLL._AC_UF1000,1000_QL80_.jpg",links:[
+      { text:"Vinted 1", url:"" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+name:"ghoulia <br>Roll maze</br>", img:"https://dollsfest.ru/pictures/product/big/8861_big.jpg",links:[
+      { text:"Vinted 1", url:"" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+name:"Abbey <br>Roll maze</br>", img:"https://1.bp.blogspot.com/-wlnvz88Fhkg/VulPz37uS2I/AAAAAAAAhnI/zd7kp56Yb0YNstmOtGvCfWHvT08yMfnuw/s1600/Abbey-Skultimate-Roller-Maze-Single-1.jpg",links:[
+      { text:"Vinted 1", url:"" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+name:"Amanita <br>Básica</br>", img:"https://i5.walmartimages.com/seo/Monster-High-Amanita-Nightshade-Doll_116cb6ed-6796-4d30-94c2-fc9e117f7b90.f809072270954f9a1add315f43878257.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF",links:[
+      { text:"Vinted 1", url:"https://es.wallapop.com/item/muneca-monster-high-amanita-nightshade-1193147661" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{
+name:"Sirena Von boo <br>Básica</br>", img:"https://m.media-amazon.com/images/I/81QtsszkE9L.jpg",links:[
+      { text:"Vinted 1", url:"" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{name:"Clawdeen <br>Dead Tired</br>", img:"https://i.pinimg.com/736x/cb/02/b3/cb02b304835c11ebbcd813e3488474c1.jpg",links:[
+      { text:"Vinted 1", url:"" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+{name:"Cleo <br>Dead Tired</br>", img:"https://m.media-amazon.com/images/I/61srKPaSUcL.jpg",links:[
+      { text:"Vinted 1", url:"" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+},
+
+  ],//fin de monster high 
+
+  "Muñecas Barbie": [
+    { name:"Barbie <br>anneliese</br>", img:"https://i.pinimg.com/736x/18/f6/15/18f6150cfec289898c720d470b340364.jpg",links:[
+      { text:"Vinted", url:"https://www.vinted.es/items/7293590492-muneca-barbie-anneliese" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+    },
+     { name:"Barbie <br>anneliese</br>", img:"https://i.pinimg.com/736x/8f/31/18/8f31182f075e8a00372bbe5ff1f6ba6e.jpg",links:[
+      { text:"Amazon", url:"https://www.amazon.es/draculaura" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+    },
+     { name:"Barbie <br>Odette</br>", img:"https://i.pinimg.com/736x/e5/52/a5/e552a593e82b1b20282765f2c55ecab9.jpg",links:[
+      { text:"Vinted", url:"https://www.vinted.es/items/7484302921-barbie-swan-lake-odette?referrer=catalog" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+    },
+     { name:"Barbie <br>Y el cascanueces</br>", img:"https://live.staticflickr.com/3727/12328590665_6c67a9278e_b.jpg",links:[
+      { text:"Amazon", url:"https://www.amazon.es/draculaura" },
+      { text:"Fnac", url:"https://www.fnac.es/draculaura" }
+    ],
+     comment:"Con su vestido rosa." 
+    },
+  
+  ],
+  "Ropa y accesorios": [
+    { name:"Sudadera calentita", img:"https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&q=80", link:"#", comment:"Color: rojo o verde." },
+    { name:"Calcetines navideños", img:"https://images.unsplash.com/photo-1608889175154-9a27e98d7f18?w=800&q=80", link:"#", comment:"Con renos o copos." },
+    { name:"Gorro de lana", img:"https://images.unsplash.com/photo-1519741491763-23c1f6d1d9ec?w=800&q=80", link:"#", comment:"Talla única." }
+  ]
+};
+
+
+// GENERAR SECCIONES
+const container = document.getElementById('giftContainer');
+
+Object.keys(giftsByCategory).forEach(category => {
+  const section = document.createElement('section');
+  section.className = 'section';
+
+  const title = document.createElement('button');
+  title.className = 'section-title';
+  title.textContent = category;
+
+  const divider = document.createElement('div');
+  divider.className = 'section-divider';
+
+  const grid = document.createElement('div');
+  grid.className = 'gift-grid';
+
+  giftsByCategory[category].forEach((g, i) => {
+    const card = document.createElement('article');
+    card.className = 'gift';
+    const idSafe = encodeURIComponent(category) + '_' + i;
+
+    let linksHTML = '';
+    if (g.links && g.links.length) {
+      linksHTML = '<div class="gift-actions">' + 
+        g.links.map(l => `<a class="buy-link" href="${l.url}" target="_blank">${l.text}</a>`).join('') + 
+        '</div>';
+    }
+
+    card.innerHTML = `
+      <img src="${g.img}" alt="${g.name}">
+      <div class="gift-body">
+        <div class="gift-title">${g.name}</div>
+        <div class="gift-comment">${g.comment || ''}</div>
+        ${linksHTML}
+        <label class="check">
+          <input type="checkbox" id="check_${idSafe}">
+          Ya me lo han regalado 🎁
+        </label>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  title.addEventListener('click', () => {
+    grid.style.display = grid.style.display === 'grid' ? 'none' : 'grid';
+  });
+
+  section.append(title, divider, grid);
+  container.appendChild(section);
+});
+
+// GUARDAR ESTADO CHECKBOX
+document.addEventListener('change', e => {
+  if (e.target.type === 'checkbox' && e.target.id.startsWith('check_')) {
+    localStorage.setItem(e.target.id, e.target.checked ? '1' : '0');
+  }
+});
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.checked = localStorage.getItem(cb.id) === '1';
+  });
+});
+</script>
+</body>
+</html>

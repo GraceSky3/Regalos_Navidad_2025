@@ -180,20 +180,6 @@ footer {
     font-size: 0.8rem;
   }
 }
-.gift-muchisimo {
-  background: #ff4d4d20;
-  border: 2px solid #ff4d4d;
-}
-
-.gift-bastante {
-  background: #facc1530;
-  border: 2px solid #facc15;
-}
-
-.gift-sipuedes {
-  background: #47d78330;
-  border: 2px solid #47d783;
-}
 
 </style>
 </head>
@@ -213,8 +199,7 @@ const giftsByCategory = {
     { name:"Draculaura<br>ghouls spirit </br>", img:"https://i.pinimg.com/1200x/11/f5/cd/11f5cd602a3e898716b5944cdd8d6327.jpg",links:[
      { text:"Vinted 1", url:"https://www.vinted.es/items/2883810929-muneca-monster-high" }
     ],
-     comment:"",
-      type:"muchisimo" 
+     comment:"" 
     },
 
     { name:"Clawdeen Wolf <br>School out</br>", img:"https://egolonsville.weebly.com/uploads/5/6/5/5/5655847/2471968_orig.jpg", links:[
@@ -523,54 +508,6 @@ name:"Sirena Von boo <br>Básica</br>", img:"https://m.media-amazon.com/images/I
   ]
 };
 
-// Crear tarjeta
-const giftCard = document.createElement("div");
-giftCard.className = "gift";
-
-// aplicar estilo según el tipo
-if (gift.type) {
-  giftCard.classList.add(`gift-${gift.type}`);
-}
-
-// imagen
-const img = document.createElement("img");
-img.src = gift.img;
-img.alt = gift.name;
-giftCard.appendChild(img);
-
-// nombre
-const name = document.createElement("h3");
-name.innerHTML = gift.name;
-giftCard.appendChild(name);
-
-// enlaces
-if (gift.links && gift.links.length > 0) {
-  const linksList = document.createElement("ul");
-  linksList.className = "links";
-
-  gift.links.forEach(link => {
-    const li = document.createElement("li");
-    const a = document.createElement("a");
-    a.href = link.url;
-    a.target = "_blank";
-    a.textContent = link.text;
-    li.appendChild(a);
-    linksList.appendChild(li);
-  });
-
-  giftCard.appendChild(linksList);
-}
-
-// comentario
-if (gift.comment) {
-  const comment = document.createElement("p");
-  comment.className = "comment";
-  comment.textContent = gift.comment;
-  giftCard.appendChild(comment);
-}
-
-// insertar tarjeta en su contenedor
-giftsContainer.appendChild(giftCard);
 
 // GENERAR SECCIONES
 const container = document.getElementById('giftContainer');

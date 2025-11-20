@@ -60,6 +60,18 @@ header h1 {
     0 0 80px #ffa500;
   animation: neonBlink 3s infinite ease-in-out;
 }
+/* Colores según categoría */
+.gift.high img {
+  border-bottom-color: #22c55e; /* verde */
+}
+
+.gift.medium img {
+  border-bottom-color: #3b82f6; /* azul */
+}
+
+.gift.low img {
+  border-bottom-color: #facc15; /* amarillo */
+}
 
 @keyframes neonBlink {
   0%, 100% {
@@ -196,7 +208,9 @@ footer {
 <script>
 const giftsByCategory = {
   "Muñecas Monster High": [
-    { name:"Draculaura<br>ghouls spirit </br>", img:"https://i.pinimg.com/1200x/11/f5/cd/11f5cd602a3e898716b5944cdd8d6327.jpg",links:[
+    { name:"Draculaura<br>ghouls spirit </br>", img:"https://i.pinimg.com/1200x/11/f5/cd/11f5cd602a3e898716b5944cdd8d6327.jpg",
+      priority:"high",
+      links:[
      { text:"Vinted 1", url:"https://www.vinted.es/items/2883810929-muneca-monster-high" }
     ],
      comment:"" 
@@ -524,6 +538,10 @@ const container = document.getElementById('giftContainer');
 Object.keys(giftsByCategory).forEach(category => {
   const section = document.createElement('section');
   section.className = 'section';
+
+  const giftEl = document.createElement("div");
+giftEl.className = `gift ${gift.priority || "low"}`; 
+
 
   const title = document.createElement('button');
   title.className = 'section-title';

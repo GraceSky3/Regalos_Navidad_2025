@@ -531,7 +531,6 @@ name:"Sirena Von boo <br>Básica</br>", img:"https://m.media-amazon.com/images/I
   ]
 };
 
-
 // GENERAR SECCIONES
 const container = document.getElementById('giftContainer');
 
@@ -539,12 +538,9 @@ Object.keys(giftsByCategory).forEach(category => {
   const section = document.createElement('section');
   section.className = 'section';
 
-  const giftEl = document.createElement("div");
-giftEl.className = `gift ${gift.priority || "low"}`; 
-
-
   const title = document.createElement('button');
   title.className = 'section-title';
+  title.type = 'button'; // evita comportamiento por defecto
   title.textContent = category;
 
   const divider = document.createElement('div');
@@ -552,21 +548,24 @@ giftEl.className = `gift ${gift.priority || "low"}`;
 
   const grid = document.createElement('div');
   grid.className = 'gift-grid';
+  grid.style.display = 'none'; // oculto por defecto
 
   giftsByCategory[category].forEach((g, i) => {
     const card = document.createElement('article');
-    card.className = 'gift';
+    // aplicamos la clase de prioridad (si no existe, "low" por defecto)
+    card.className = `gift ${g.priority || 'low'}`;
     const idSafe = encodeURIComponent(category) + '_' + i;
 
+    // construir enlaces
     let linksHTML = '';
     if (g.links && g.links.length) {
       linksHTML = '<div class="gift-actions">' + 
-        g.links.map(l => `<a class="buy-link" href="${l.url}" target="_blank">${l.text}</a>`).join('') + 
+        g.links.map(l => `<a class="buy-link" href="${l.url || '#'}" target="_blank" rel="noopener noreferrer">${l.text}</a>`).join('') + 
         '</div>';
     }
 
     card.innerHTML = `
-      <img src="${g.img}" alt="${g.name}">
+      <img src="${g.img || ''}" alt="${g.name}">
       <div class="gift-body">
         <div class="gift-title">${g.name}</div>
         <div class="gift-comment">${g.comment || ''}</div>
@@ -590,14 +589,16 @@ giftEl.className = `gift ${gift.priority || "low"}`;
 
 // GUARDAR ESTADO CHECKBOX
 document.addEventListener('change', e => {
-  if (e.target.type === 'checkbox' && e.target.id.startsWith('check_')) {
+  if (e.target.type === 'checkbox' && e.target.id && e.target.id.startsWith('check_')) {
     localStorage.setItem(e.target.id, e.target.checked ? '1' : '0');
   }
 });
-window.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+
+// RESTAURAR CHECKBOXES AHORA (ya hemos creado las tarjetas)
+document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+  try {
     cb.checked = localStorage.getItem(cb.id) === '1';
-  });
+  } catch (err) { /* silencioso si algo falla */ }
 });
 </script>
 </body>

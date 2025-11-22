@@ -667,9 +667,13 @@ Object.keys(giftsByCategory).forEach(category => {
     grid.appendChild(card);
   });
 
-  title.addEventListener('click', () => {
-    grid.style.display = grid.style.display === 'grid' ? 'none' : 'grid';
-  });
+ title.addEventListener("click", () => {
+  grid.style.display = grid.style.display === "grid" ? "none" : "grid";
+
+  // <-- importante
+  updateLegendVisibility();
+});
+
 
   section.append(title, divider, grid);
   container.appendChild(section);
@@ -708,6 +712,13 @@ function showLegendOnce() {
   if (legend.style.display === "none") {
     legend.style.display = "block";
   }
+}
+// --- Mostrar/Ocultar leyenda y filtro dependiendo si hay algún desplegable abierto ---
+function updateLegendVisibility() {
+  const grids = document.querySelectorAll(".gift-grid");
+  const someOpen = [...grids].some(g => g.style.display === "grid" || g.style.display === "block");
+
+  document.getElementById("legendContainer").style.display = someOpen ? "block" : "none";
 }
 
 // Interceptamos los clics en los títulos de sección

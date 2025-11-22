@@ -206,48 +206,10 @@ body {
 
 </style>
 </head>
-<script>
-// Mostrar/ocultar legendContainer al abrir/cerrar secciones
-document.querySelectorAll(".section-title").forEach(title => {
-  title.addEventListener("click", () => {
-    const grid = title.nextElementSibling;
-    const isOpen = grid.style.display === "grid";
-
-    // Cerrar todos los grids
-    document.querySelectorAll(".gift-grid").forEach(g => g.style.display = "none");
-
-    if (isOpen) {
-      // Si estaba abierto: cerrar y ocultar menú
-      grid.style.display = "none";
-      document.getElementById("legendContainer").style.display = "none";
-    } else {
-      // Si se abre: mostrar menú
-      grid.style.display = "grid";
-      document.getElementById("legendContainer").style.display = "block";
-    }
-  });
-});
-
-// FILTRO DE PRIORIDADES
-document.getElementById("priorityFilter").addEventListener("change", function () {
-  const selected = this.value;
-  const allGifts = document.querySelectorAll(".gift");
-
-  allGifts.forEach(gift => {
-    if (selected === "all" || gift.classList.contains(selected)) {
-      gift.style.display = "block";
-    } else {
-      gift.style.display = "none";
-    }
-  });
-});
-</script>
-
 <body>
 
 <header>
   <h1>🎄 Mis Regalos 🎁</h1> <br>
-  <div id="legendContainer" style="display:none; margin-top:10px;">
  <!-- LEYENDA + DESPLEGABLE (OCULTOS AL INICIO) -->
 <div id="legendContainer" style="display:none; margin-top:10px;">
 
@@ -732,6 +694,78 @@ document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
   } catch (err) { /* silencioso si algo falla */ }
 });
 </script>
+<script>
+// AÑADIR SECCIONES AL DOM
+const giftContainer = document.getElementById("giftContainer");
+
+for (const category in giftsByCategory) {
+  const section = document.createElement("section");
+  section.className = "section";
+
+  section.innerHTML = `
+    <h2 class="section-title">${category}</h2>
+    <div class="section-divider"></div>
+    <div class="gift-grid"></div>
+  `;
+
+  const grid = section.querySelector(".gift-grid");
+
+  giftsByCategory[category].forEach(g => {
+    const card = document.createElement("div");
+    card.className = `gift ${g.priority}`;
+
+    card.innerHTML = `
+      <img src="${g.img}">
+      <div class="gift-body">
+        <div class="gift-title">${g.name}</div>
+        <div class="gift-comment">${g.comment || ""}</div>
+
+        <div class="gift-actions">
+          ${g.links.map(l => `<a class="buy-link" href="${l.url}" target="_blank">${l.text}</a>`).join("")}
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  giftContainer.appendChild(section);
+}
+
+// MOSTRAR / OCULTAR DESPLEGABLE + LEYENDA
+const legend = document.getElementById("legendContainer");
+
+document.querySelectorAll(".section-title").forEach(title => {
+  title.addEventListener("click", () => {
+    const grid = title.parentElement.querySelector(".gift-grid");
+    const isOpen = grid.style.display === "grid";
+
+    // Cerrar todos
+    document.querySelectorAll(".gift-grid").forEach(g => g.style.display = "none");
+
+    if (isOpen) {
+      grid.style.display = "none";
+      legend.style.display = "none";
+    } else {
+      grid.style.display = "grid";
+      legend.style.display = "block";
+    }
+  });
+});
+
+// FILTRAR POR PRIORIDAD
+document.getElementById("priorityFilter").addEventListener("change", function () {
+  const selected = this.value;
+
+  document.querySelectorAll(".gift").forEach(gift => {
+    if (selected === "all" || gift.classList.contains(selected)) {
+      gift.style.display = "block";
+    } else {
+      gift.style.display = "none";
+    }
+  });
+});
+</script>
+
 
 </body>
 </html>

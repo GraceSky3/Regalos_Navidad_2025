@@ -206,33 +206,76 @@ body {
 
 </style>
 </head>
+<script>
+// Mostrar/ocultar legendContainer al abrir/cerrar secciones
+document.querySelectorAll(".section-title").forEach(title => {
+  title.addEventListener("click", () => {
+    const grid = title.nextElementSibling;
+    const isOpen = grid.style.display === "grid";
+
+    // Cerrar todos los grids
+    document.querySelectorAll(".gift-grid").forEach(g => g.style.display = "none");
+
+    if (isOpen) {
+      // Si estaba abierto: cerrar y ocultar menú
+      grid.style.display = "none";
+      document.getElementById("legendContainer").style.display = "none";
+    } else {
+      // Si se abre: mostrar menú
+      grid.style.display = "grid";
+      document.getElementById("legendContainer").style.display = "block";
+    }
+  });
+});
+
+// FILTRO DE PRIORIDADES
+document.getElementById("priorityFilter").addEventListener("change", function () {
+  const selected = this.value;
+  const allGifts = document.querySelectorAll(".gift");
+
+  allGifts.forEach(gift => {
+    if (selected === "all" || gift.classList.contains(selected)) {
+      gift.style.display = "block";
+    } else {
+      gift.style.display = "none";
+    }
+  });
+});
+</script>
+
 <body>
 
 <header>
   <h1>🎄 Mis Regalos 🎁</h1> <br>
   <div id="legendContainer" style="display:none; margin-top:10px;">
+ <!-- LEYENDA + DESPLEGABLE (OCULTOS AL INICIO) -->
+<div id="legendContainer" style="display:none; margin-top:10px;">
+
+  <!-- Leyenda de colores -->
   <div class="categorias">
     <p class="high">Me haría mucha ilusión — verde</p>
     <p class="medium">Me haría ilusión — azul</p>
     <p class="low">Me gustaría — amarillo</p>
   </div>
 
-
+  <!-- Desplegable de prioridad -->
   <div style="margin-top: 15px;">
-  <select id="priorityFilter" style="
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 1rem;
-    border: 2px solid #fff;
-    background: rgba(0,0,0,0.4);
-    color: #fff;
-    backdrop-filter: blur(5px);
-  ">
-    <option value="all">Mostrar todo</option>
-    <option value="high">Me haría mucha ilusión — verde</option>
-    <option value="medium">Me haría ilusión — azul</option>
-    <option value="low">Me gustaría — amarillo</option>
-  </select>
+    <select id="priorityFilter" style="
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 1rem;
+      border: 2px solid #fff;
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      backdrop-filter: blur(5px);
+    ">
+      <option value="all">Mostrar todo</option>
+      <option value="high">Me haría mucha ilusión — verde</option>
+      <option value="medium">Me haría ilusión — azul</option>
+      <option value="low">Me gustaría — amarillo</option>
+    </select>
+  </div>
+
 </div>
 
 </header>
@@ -688,42 +731,6 @@ document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
     cb.checked = localStorage.getItem(cb.id) === '1';
   } catch (err) { /* silencioso si algo falla */ }
 });
-</script>
-<script>
-document.getElementById("priorityFilter").addEventListener("change", function () {
-  const selected = this.value;
-  const allGifts = document.querySelectorAll(".gift");
-
-  allGifts.forEach(gift => {
-    if (selected === "all" || gift.classList.contains(selected)) {
-      gift.style.display = "block";
-    } else {
-      gift.style.display = "none";
-    }
-  });
-});
-// Mostrar leyenda + filtro al abrir la primera categoría
-function showLegendOnce() {
-  const legend = document.getElementById("legendContainer");
-  if (legend.style.display === "none") {
-    legend.style.display = "block";
-  }
-}
-
-// Interceptamos los clics en los títulos de sección
-title.addEventListener("click", () => {
-    const grid = title.nextElementSibling;
-
-    if (grid.style.display === "grid") {
-        grid.style.display = "none";
-        legendContainer.style.display = "none";  // ⬅ AÑADE ESTO
-    } else {
-        grid.style.display = "grid";
-        legendContainer.style.display = "block";
-    }
-});
-
-
 </script>
 
 </body>

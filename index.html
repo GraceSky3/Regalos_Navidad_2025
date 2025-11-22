@@ -667,12 +667,14 @@ Object.keys(giftsByCategory).forEach(category => {
     grid.appendChild(card);
   });
 
- title.addEventListener("click", () => {
+title.addEventListener("click", () => {
+  // Abre o cierra el grid
   grid.style.display = grid.style.display === "grid" ? "none" : "grid";
 
-  // <-- importante
+  // 🔥 Actualiza la visibilidad de la leyenda
   updateLegendVisibility();
 });
+
 
 
   section.append(title, divider, grid);
@@ -716,10 +718,14 @@ function showLegendOnce() {
 // --- Mostrar/Ocultar leyenda y filtro dependiendo si hay algún desplegable abierto ---
 function updateLegendVisibility() {
   const grids = document.querySelectorAll(".gift-grid");
-  const someOpen = [...grids].some(g => g.style.display === "grid" || g.style.display === "block");
+  const legend = document.getElementById("legendContainer");
 
-  document.getElementById("legendContainer").style.display = someOpen ? "block" : "none";
+  // Verifica si hay algún desplegable abierto
+  const algunAbierto = [...grids].some(g => g.style.display === "grid");
+
+  legend.style.display = algunAbierto ? "block" : "none";
 }
+
 
 // Interceptamos los clics en los títulos de sección
 document.addEventListener("click", (e) => {

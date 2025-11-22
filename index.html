@@ -209,37 +209,31 @@ body {
 
 <header>
   <h1>🎄 Mis Regalos 🎁</h1> <br>
+  <div class="categorias">
+    <p class="high">Me haría mucha ilusión — verde</p>
+    <p class="medium">Me haría ilusión — azul</p>
+    <p class="low">Me gustaría — amarillo</p>
+  </div>
 
-  <!-- LEYENDA + DESPLEGABLE (OCULTOS AL INICIO) -->
-  <div id="legendContainer" style="display:none; margin-top:10px;">
+  <div style="margin-top: 15px;">
+  <select id="priorityFilter" style="
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1rem;
+    border: 2px solid #fff;
+    background: rgba(0,0,0,0.4);
+    color: #fff;
+    backdrop-filter: blur(5px);
+  ">
+    <option value="all">Mostrar todo</option>
+    <option value="high">Me haría mucha ilusión — verde</option>
+    <option value="medium">Me haría ilusión — azul</option>
+    <option value="low">Me gustaría — amarillo</option>
+  </select>
+</div>
 
-    <!-- Leyenda de colores -->
-    <div class="categorias">
-      <p class="high">Me haría mucha ilusión — verde</p>
-      <p class="medium">Me haría ilusión — azul</p>
-      <p class="low">Me gustaría — amarillo</p>
-    </div>
-
-    <!-- Selector -->
-    <div style="margin-top: 15px;">
-      <select id="priorityFilter" style="
-        padding: 10px;
-        border-radius: 10px;
-        font-size: 1rem;
-        border: 2px solid #fff;
-        background: rgba(0,0,0,0.4);
-        color: #fff;
-        backdrop-filter: blur(5px);
-      ">
-        <option value="all">Mostrar todo</option>
-        <option value="high">Me haría mucha ilusión — verde</option>
-        <option value="medium">Me haría ilusión — azul</option>
-        <option value="low">Me gustaría — amarillo</option>
-      </select>
-    </div>
-
-  </div> <!-- 🔥 CIERRE QUE FALTABA -->
 </header>
+
 
 
 <main id="giftContainer"></main>

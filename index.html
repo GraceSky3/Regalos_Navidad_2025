@@ -620,74 +620,57 @@ links:[
   ]
 };
 
-// GENERAR SECCIONES
-const container = document.getElementById('giftContainer');
+// === generar secciones por categoría ===
+const giftContainer = document.getElementById("giftContainer");
 
-Object.keys(giftsByCategory).forEach(category => {
-  const section = document.createElement('section');
-  section.className = 'section';
+for (const category in giftsByCategory) {
 
-  const title = document.createElement('button');
-  title.className = 'section-title';
-  title.type = 'button'; // evita comportamiento por defecto
-  title.textContent = category;
+    // crear título desplegable
+    const title = document.createElement("h2");
+    title.className = "section-title";
+    title.textContent = category;
 
-  const divider = document.createElement('div');
-  divider.className = 'section-divider';
+    // crear contenedor de tarjetas
+    const grid = document.createElement("div");
+    grid.className = "gift-grid";
+    grid.style.display = "none";
 
-  const grid = document.createElement('div');
-  grid.className = 'gift-grid';
-  grid.style.display = 'none'; // oculto por defecto
+    // renderizar tarjetas
+    giftsByCategory[category].forEach(gift => {
+        const card = document.createElement("div");
+        card.className = `gift ${gift.priority}`;
 
-  giftsByCategory[category].forEach((g, i) => {
-    const card = document.createElement('article');
-    // aplicamos la clase de prioridad (si no existe, "low" por defecto)
-    card.className = `gift ${g.priority || 'low'}`;
-    const idSafe = encodeURIComponent(category) + '_' + i;
+        card.innerHTML = `
+            <img src="${gift.img}">
+            <div class="gift-body">
+                <div class="gift-title">${gift.name}</div>
+                <div class="gift-comment">${gift.comment}</div>
+                <div class="gift-actions">
+                    ${gift.links.map(l => `<a class="buy-link" href="${l.url}" target="_blank">${l.text}</a>`).join("")}
+                </div>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
 
-    // construir enlaces
-    let linksHTML = '';
-    if (g.links && g.links.length) {
-      linksHTML = '<div class="gift-actions">' + 
-        g.links.map(l => `<a class="buy-link" href="${l.url || '#'}" target="_blank" rel="noopener noreferrer">${l.text}</a>`).join('') + 
-        '</div>';
-    }
+    // mostrar/ocultar al pulsar
+    title.addEventListener("click", () => {
+        grid.style.display = grid.style.display === "none" ? "grid" : "none";
+    });
 
-    card.innerHTML = `
-      <img src="${g.img || ''}" alt="${g.name}">
-      <div class="gift-body">
-        <div class="gift-title">${g.name}</div>
-        <div class="gift-comment">${g.comment || ''}</div>
-        ${linksHTML}
-        <label class="check">
-          <input type="checkbox" id="check_${idSafe}">
-          Ya me lo han regalado 🎁
-        </label>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
+    // añadir todo a la página
+    giftContainer.appendChild(title);
+    giftContainer.appendChild(grid);
+}
 
-  title.addEventListener('click', () => {
-    grid.style.display = grid.style.display === 'grid' ? 'none' : 'grid';
-  });
-
-  section.append(title, divider, grid);
-  container.appendChild(section);
-});
-
-// GUARDAR ESTADO CHECKBOX
-document.addEventListener('change', e => {
-  if (e.target.type === 'checkbox' && e.target.id && e.target.id.startsWith('check_')) {
-    localStorage.setItem(e.target.id, e.target.checked ? '1' : '0');
-  }
-});
-
-// RESTAURAR CHECKBOXES AHORA (ya hemos creado las tarjetas)
-document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-  try {
-    cb.checked = localStorage.getItem(cb.id) === '1';
-  } catch (err) { /* silencioso si algo falla */ }
+// === filtro por prioridad ===
+const priorityFilter = document.getElementById("priorityFilter");
+priorityFilter.addEventListener("change", () => {
+    document.querySelectorAll(".gift").forEach(card => {
+        const show = priorityFilter.value === "all" ||
+                     card.classList.contains(priorityFilter.value);
+        card.style.display = show ? "flex" : "none";
+    });
 });
 </script>
 

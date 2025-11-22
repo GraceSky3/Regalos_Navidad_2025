@@ -219,24 +219,21 @@ body {
     <p class="low">Me gustaría — amarillo</p>
   </div>
 
-  <!-- Desplegable de prioridad -->
   <div style="margin-top: 15px;">
-    <select id="priorityFilter" style="
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 1rem;
-      border: 2px solid #fff;
-      background: rgba(0,0,0,0.4);
-      color: #fff;
-      backdrop-filter: blur(5px);
-    ">
-      <option value="all">Mostrar todo</option>
-      <option value="high">Me haría mucha ilusión — verde</option>
-      <option value="medium">Me haría ilusión — azul</option>
-      <option value="low">Me gustaría — amarillo</option>
-    </select>
-  </div>
-
+  <select id="priorityFilter" style="
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1rem;
+    border: 2px solid #fff;
+    background: rgba(0,0,0,0.4);
+    color: #fff;
+    backdrop-filter: blur(5px);
+  ">
+    <option value="all">Mostrar todo</option>
+    <option value="high">Me haría mucha ilusión — verde</option>
+    <option value="medium">Me haría ilusión — azul</option>
+    <option value="low">Me gustaría — amarillo</option>
+  </select>
 </div>
 
 </header>
@@ -693,68 +690,21 @@ document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
   } catch (err) { /* silencioso si algo falla */ }
 });
 </script>
+
 <script>
-// AÑADIR SECCIONES AL DOM
-const giftContainer = document.getElementById("giftContainer");
+document.getElementById("priorityFilter").addEventListener("change", function () {
+  const selected = this.value;
+  const allGifts = document.querySelectorAll(".gift");
 
-for (const category in giftsByCategory) {
-  const section = document.createElement("section");
-  section.className = "section";
-
-  section.innerHTML = `
-    <h2 class="section-title">${category}</h2>
-    <div class="section-divider"></div>
-    <div class="gift-grid"></div>
-  `;
-
-  const grid = section.querySelector(".gift-grid");
-
-  giftsByCategory[category].forEach(g => {
-    const card = document.createElement("div");
-    card.className = `gift ${g.priority}`;
-
-    card.innerHTML = `
-      <img src="${g.img}">
-      <div class="gift-body">
-        <div class="gift-title">${g.name}</div>
-        <div class="gift-comment">${g.comment || ""}</div>
-
-        <div class="gift-actions">
-          ${g.links.map(l => `<a class="buy-link" href="${l.url}" target="_blank">${l.text}</a>`).join("")}
-        </div>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
-
-  giftContainer.appendChild(section);
-}
-
-// MOSTRAR / OCULTAR DESPLEGABLE + LEYENDA
-const legend = document.getElementById("legendContainer");
-
-document.querySelectorAll(".section-title").forEach(title => {
-  title.addEventListener("click", () => {
-    const grid = title.parentElement.querySelector(".gift-grid");
-    const isOpen = grid.style.display === "grid";
-
-    // Cerrar todos los grids
-    document.querySelectorAll(".gift-grid").forEach(g => g.style.display = "none");
-
-    if (isOpen) {
-      // Si estaba abierto, cerramos y ocultamos leyenda
-      grid.style.display = "none";
-      legend.style.display = "none";
+  allGifts.forEach(gift => {
+    if (selected === "all" || gift.classList.contains(selected)) {
+      gift.style.display = "block";
     } else {
-      // Abrir grid actual
-      grid.style.display = "grid";
-      legend.style.display = "block"; // Mostrar leyenda solo para esta categoría
+      gift.style.display = "none";
     }
   });
 });
-
 </script>
-
 
 </body>
 </html>

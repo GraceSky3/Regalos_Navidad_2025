@@ -217,24 +217,6 @@ body {
     <p class="low">Me gustaría — amarillo</p>
   </div>
 
-  <div style="margin-top: 15px;">
-    <select id="priorityFilter" style="
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 1rem;
-      border: 2px solid #fff;
-      background: rgba(0,0,0,0.4);
-      color: #fff;
-      backdrop-filter: blur(5px);
-    ">
-      <option value="all">Mostrar todo</option>
-      <option value="high">Me haría mucha ilusión — verde</option>
-      <option value="medium">Me haría ilusión — azul</option>
-      <option value="low">Me gustaría — amarillo</option>
-    </select>
-  </div>
-</div>
-
 
   <div style="margin-top: 15px;">
   <select id="priorityFilter" style="
@@ -708,7 +690,7 @@ document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
 });
 </script>
 <script>
-/*document.getElementById("priorityFilter").addEventListener("change", function () {
+document.getElementById("priorityFilter").addEventListener("change", function () {
   const selected = this.value;
   const allGifts = document.querySelectorAll(".gift");
 
@@ -719,7 +701,7 @@ document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
       gift.style.display = "none";
     }
   });
-});*/
+});
 // Mostrar leyenda + filtro al abrir la primera categoría
 function showLegendOnce() {
   const legend = document.getElementById("legendContainer");

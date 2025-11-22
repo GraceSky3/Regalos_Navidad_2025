@@ -667,13 +667,27 @@ Object.keys(giftsByCategory).forEach(category => {
     grid.appendChild(card);
   });
 
-title.addEventListener("click", () => {
-  // Abre o cierra el grid
-  grid.style.display = grid.style.display === "grid" ? "none" : "grid";
+title.onclick = () => {
+    const isOpen = grid.style.display === "grid";
 
-  // 🔥 Actualiza la visibilidad de la leyenda
-  updateLegendVisibility();
-});
+    // abrir o cerrar
+    grid.style.display = isOpen ? "none" : "grid";
+
+    // 🔥 MOSTRAR / OCULTAR SELECT + LEYENDA
+    const legend = document.getElementById("legendContainer");
+    const filter = document.getElementById("priorityFilter");
+
+    if (isOpen) {
+        // se cerró → ocultar select + leyenda
+        legend.style.display = "none";
+        filter.style.display = "none";
+    } else {
+        // se abrió → mostrar select + leyenda
+        legend.style.display = "block";
+        filter.style.display = "block";
+    }
+};
+
 
 
 

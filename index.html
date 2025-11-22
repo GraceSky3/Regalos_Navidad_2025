@@ -624,109 +624,75 @@ links:[
   ]
 };
 
-/* ---------------------
-   GENERAR SECCIONES + TARJETAS
----------------------- */
+function renderGifts() {
+  const container = document.getElementById("giftContainer");
+  container.innerHTML = "";
 
-const giftContainer = document.getElementById("giftContainer");
-const priorityFilter = document.getElementById("priorityFilter");
-const legendContainer = document.getElementById("legendContainer");
+  Object.entries(giftsByCategory).forEach(([category, items]) => {
+    // Título de sección
+    const section = document.createElement("section");
+    section.className = "section";
 
-/* Mostrar leyenda y selector */
-legendContainer.style.display = "block";
+    const title = document.createElement("h2");
+    title.className = "section-title";
+    title.textContent = category;
+    section.appendChild(title);
 
-/* Crear todas las categorías */
-Object.entries(giftsByCategory).forEach(([categoryName, giftList]) => {
-  
-  // --- Crear contenedor de sección ---
-  const section = document.createElement("section");
-  section.classList.add("section");
+    const divider = document.createElement("div");
+    divider.className = "section-divider";
+    section.appendChild(divider);
 
-  // Título clicable
-  const title = document.createElement("h2");
-  title.classList.add("section-title");
-  title.innerHTML = categoryName;
+    // Grid
+    const grid = document.createElement("div");
+    grid.className = "gift-grid";
 
-  // Línea decorativa
-  const divider = document.createElement("div");
-  divider.classList.add("section-divider");
+    items.forEach(gift => {
+      const card = document.createElement("div");
+      card.className = "gift " + gift.priority;
 
-  // Grid oculto al inicio
-  const grid = document.createElement("div");
-  grid.classList.add("gift-grid");
+      card.innerHTML = `
+        <img src="${gift.img}">
+        <div class="gift-body">
+          <div class="gift-title">${gift.name}</div>
+          <div class="gift-comment">${gift.comment || ""}</div>
+          <div class="gift-actions">
+            ${
+              gift.links.map(l => 
+                `<a class="buy-link" href="${l.url}" target="_blank">${l.text}</a>`
+              ).join("")
+            }
+          </div>
+        </div>
+      `;
 
-  /* --- Generar tarjetas --- */
-  giftList.forEach(gift => {
-    const card = document.createElement("div");
-    card.classList.add("gift", gift.priority);
-
-    // Imagen
-    const img = document.createElement("img");
-    img.src = gift.img;
-
-    // Cuerpo
-    const body = document.createElement("div");
-    body.classList.add("gift-body");
-
-    // Nombre
-    const name = document.createElement("div");
-    name.classList.add("gift-title");
-    name.innerHTML = gift.name;
-
-    // Comentario
-    const comment = document.createElement("div");
-    comment.classList.add("gift-comment");
-    comment.textContent = gift.comment || "";
-
-    // Botones de compra
-    const actions = document.createElement("div");
-    actions.classList.add("gift-actions");
-
-    gift.links.forEach(link => {
-      const a = document.createElement("a");
-      a.classList.add("buy-link");
-      a.href = link.url;
-      a.textContent = link.text;
-      a.target = "_blank";
-      actions.appendChild(a);
+      grid.appendChild(card);
     });
 
-    body.appendChild(name);
-    body.appendChild(comment);
-    body.appendChild(actions);
+    section.appendChild(grid);
+    container.appendChild(section);
 
-    card.appendChild(img);
-    card.appendChild(body);
-    grid.appendChild(card);
+    // Abrir/cerrar sección
+    title.addEventListener("click", () => {
+      grid.style.display = grid.style.display === "grid" ? "none" : "grid";
+      document.getElementById("legendContainer").style.display = "block";
+    });
   });
+}
 
-  /* --- Click para abrir/cerrar sección --- */
-  title.addEventListener("click", () => {
-    grid.style.display = grid.style.display === "grid" ? "none" : "grid";
-  });
-
-  section.appendChild(title);
-  section.appendChild(divider);
-  section.appendChild(grid);
-  giftContainer.appendChild(section);
-});
-
-/* ---------------------
-   FILTRO POR PRIORIDAD
----------------------- */
-
-priorityFilter.addEventListener("change", () => {
-  const value = priorityFilter.value;
-
+// =========================
+// FILTRO POR PRIORIDAD
+// =========================
+document.getElementById("priorityFilter").addEventListener("change", e => {
+  const val = e.target.value;
   document.querySelectorAll(".gift").forEach(card => {
-    if (value === "all" || card.classList.contains(value)) {
-      card.style.display = "flex";
-    } else {
-      card.style.display = "none";
-    }
+    card.style.display = (val === "all" || card.classList.contains(val)) ? "flex" : "none";
   });
 });
 
+// =========================
+// INICIAR TODO
+// =========================
+renderGifts();
 </script>
 
 <script>

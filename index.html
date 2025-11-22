@@ -692,18 +692,43 @@ document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
 </script>
 
 <script>
-document.getElementById("priorityFilter").addEventListener("change", function () {
-  const selected = this.value;
-  const allGifts = document.querySelectorAll(".gift");
+// ---- MOSTRAR / OCULTAR LEYENDA SEGÚN DESPLEGABLE ----
 
-  allGifts.forEach(gift => {
-    if (selected === "all" || gift.classList.contains(selected)) {
-      gift.style.display = "block";
+// Todos los desplegables
+const sections = document.querySelectorAll(".section-title");
+
+// Contenedor de la leyenda
+const legend = document.getElementById("legendContainer");
+
+sections.forEach(title => {
+  title.addEventListener("click", () => {
+    
+    // La rejilla de tarjetas asociada a este título
+    const grid = title.nextElementSibling;
+
+    // Alternar visibilidad (display)
+    const isOpen = grid.style.display === "grid";
+
+    // Cerrar todos los demás
+    document.querySelectorAll(".gift-grid").forEach(g => g.style.display = "none");
+
+    if (!isOpen) {
+      // Abrir este
+      grid.style.display = "grid";
+      legend.style.display = "block";   // ← mostrar leyenda + filtro
     } else {
-      gift.style.display = "none";
+      // Cerrar este
+      grid.style.display = "none";
+
+      // Si NO hay ninguna sección abierta → oculta leyenda
+      const anyOpen = Array.from(document.querySelectorAll(".gift-grid"))
+        .some(g => g.style.display === "grid");
+
+      if (!anyOpen) legend.style.display = "none";
     }
   });
 });
+
 </script>
 
 </body>

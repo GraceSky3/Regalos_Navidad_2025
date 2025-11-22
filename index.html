@@ -711,18 +711,11 @@ function showLegendOnce() {
 }
 
 // Interceptamos los clics en los títulos de sección
-title.addEventListener("click", () => {
-    const grid = title.nextElementSibling;
-
-    if (grid.style.display === "grid") {
-        grid.style.display = "none";
-        legendContainer.style.display = "none";  // ⬅ AÑADE ESTO
-    } else {
-        grid.style.display = "grid";
-        legendContainer.style.display = "block";
-    }
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("section-title")) {
+    showLegendOnce();
+  }
 });
-
 
 </script>
 

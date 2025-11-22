@@ -176,9 +176,6 @@ body {
 }
 
 
-
-
-
 /* --- Versión móvil mejorada --- */
 @media (max-width: 768px) {
   header h1 {
@@ -218,6 +215,23 @@ body {
     <p class="medium">Me haría ilusión — azul</p>
     <p class="low">Me gustaría — amarillo</p>
   </div>
+
+  <div style="margin-top: 15px;">
+  <select id="priorityFilter" style="
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1rem;
+    border: 2px solid #fff;
+    background: rgba(0,0,0,0.4);
+    color: #fff;
+    backdrop-filter: blur(5px);
+  ">
+    <option value="all">Mostrar todo</option>
+    <option value="high">Me haría mucha ilusión — verde</option>
+    <option value="medium">Me haría ilusión — azul</option>
+    <option value="low">Me gustaría — amarillo</option>
+  </select>
+</div>
 
 </header>
 
@@ -673,5 +687,20 @@ document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
   } catch (err) { /* silencioso si algo falla */ }
 });
 </script>
+<script>
+document.getElementById("priorityFilter").addEventListener("change", function () {
+  const selected = this.value;
+  const allGifts = document.querySelectorAll(".gift");
+
+  allGifts.forEach(gift => {
+    if (selected === "all" || gift.classList.contains(selected)) {
+      gift.style.display = "block";
+    } else {
+      gift.style.display = "none";
+    }
+  });
+});
+</script>
+
 </body>
 </html>

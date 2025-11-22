@@ -3,6 +3,7 @@
 <head>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>">
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Lista de Navidad 2025-2026</title>
@@ -209,11 +210,13 @@ body {
 
 <header>
   <h1>🎄 Mis Regalos 🎁</h1> <br>
+  <div id="legendContainer" style="display:none; margin-top:10px;">
   <div class="categorias">
     <p class="high">Me haría mucha ilusión — verde</p>
     <p class="medium">Me haría ilusión — azul</p>
     <p class="low">Me gustaría — amarillo</p>
   </div>
+
 
   <div style="margin-top: 15px;">
   <select id="priorityFilter" style="
@@ -233,8 +236,6 @@ body {
 </div>
 
 </header>
-
-
 
 <main id="giftContainer"></main>
 <footer>¡Feliz Navidad! 🎅✨</footer>
@@ -688,43 +689,32 @@ document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
   } catch (err) { /* silencioso si algo falla */ }
 });
 </script>
-
 <script>
-// ---- MOSTRAR / OCULTAR LEYENDA SEGÚN DESPLEGABLE ----
+document.getElementById("priorityFilter").addEventListener("change", function () {
+  const selected = this.value;
+  const allGifts = document.querySelectorAll(".gift");
 
-// Todos los desplegables
-const sections = document.querySelectorAll(".section-title");
-
-// Contenedor de la leyenda
-const legend = document.getElementById("legendContainer");
-
-sections.forEach(title => {
-  title.addEventListener("click", () => {
-    
-    // La rejilla de tarjetas asociada a este título
-    const grid = title.nextElementSibling;
-
-    // Alternar visibilidad (display)
-    const isOpen = grid.style.display === "grid";
-
-    // Cerrar todos los demás
-    document.querySelectorAll(".gift-grid").forEach(g => g.style.display = "none");
-
-    if (!isOpen) {
-      // Abrir este
-      grid.style.display = "grid";
-      legend.style.display = "block";   // ← mostrar leyenda + filtro
+  allGifts.forEach(gift => {
+    if (selected === "all" || gift.classList.contains(selected)) {
+      gift.style.display = "block";
     } else {
-      // Cerrar este
-      grid.style.display = "none";
-
-      // Si NO hay ninguna sección abierta → oculta leyenda
-      const anyOpen = Array.from(document.querySelectorAll(".gift-grid"))
-        .some(g => g.style.display === "grid");
-
-      if (!anyOpen) legend.style.display = "none";
+      gift.style.display = "none";
     }
   });
+});
+// Mostrar leyenda + filtro al abrir la primera categoría
+function showLegendOnce() {
+  const legend = document.getElementById("legendContainer");
+  if (legend.style.display === "none") {
+    legend.style.display = "block";
+  }
+}
+
+// Interceptamos los clics en los títulos de sección
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("section-title")) {
+    showLegendOnce();
+  }
 });
 
 </script>
